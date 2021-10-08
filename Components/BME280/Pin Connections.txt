@@ -1,0 +1,4 @@
+3.3v -> 3.3v
+GND -> GND
+SDA -> A4
+SCL -> A5
