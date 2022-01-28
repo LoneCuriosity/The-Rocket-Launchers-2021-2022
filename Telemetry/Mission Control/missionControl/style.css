@@ -1,0 +1,46 @@
+body {
+  background-color: #26375D;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.TopSection {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.TopSection div {
+  background-color: #2E3C67;
+  padding: 12px;
+}
+
+#RocketSimDiv {
+  position: relative;
+}
+
+#RocketSimDiv p {
+  color: whitesmoke;
+  font-family: 'Cascadia Code';
+  margin: 0;
+  position: absolute;
+  top: calc(100% - 33px);
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  text-align: center;
+}
+
+#RocketSimDiv h1 {
+  color: whitesmoke;
+  font-family: 'Cascadia Code';
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  text-align: center;
+}
