@@ -18,29 +18,7 @@ body {
   padding: 12px;
 }
 
-#RocketSimDiv {
-  position: relative;
-}
-
-#RocketSimDiv p {
-  color: whitesmoke;
-  font-family: 'Cascadia Code';
-  margin: 0;
+#Overlay {
   position: absolute;
-  top: calc(100% - 33px);
-  left: 50%;
-  transform: translate(-50%);
-  width: 100%;
-  text-align: center;
-}
-
-#RocketSimDiv h1 {
-  color: whitesmoke;
-  font-family: 'Cascadia Code';
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  width: 100%;
-  text-align: center;
+  left: 20px;
 }
