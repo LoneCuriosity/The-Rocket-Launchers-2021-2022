@@ -18,7 +18,11 @@ body {
   padding: 12px;
 }
 
-#Overlay {
+.viewport {
+  position: relative;
+}
+
+.viewport canvas:last-child {
   position: absolute;
   left: 20px;
 }

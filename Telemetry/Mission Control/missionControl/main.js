@@ -7,3 +7,10 @@ var RocketOne = new Rocket(document.getElementById('RocketSim'),document.getElem
 RocketOne.InitViewport()
 RocketOne.InitOverlay()
 RocketOne.animate()
+
+var RocketTwo = new Rocket(document.getElementById('RocketSim1'),document.getElementById('Overlay1'));
+
+RocketTwo.InitViewport()
+RocketTwo.InitOverlay()
+RocketTwo.animate()
+

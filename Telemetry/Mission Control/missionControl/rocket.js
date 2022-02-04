@@ -38,6 +38,9 @@ export default class Rocket {
         const objLoader = new OBJLoader()
         this.obj = await objLoader.loadAsync('./model/rocket.obj')
 
+        this.obj.rotation.x = (Math.PI/180 * 90);
+        this.obj.scale.set(0.6,0.6,0.6)
+
         this.obj.traverse(function (child) {
             if ((child).isMesh) {
                 (child).material = material
@@ -54,7 +57,7 @@ export default class Rocket {
         this.overlayCanvasContext = this.overlayCanvas.getContext("2d");
 
         this.radius = this.overlayCanvas.height / 2;
-        this.overlayCanvasContext.translate(this.radius, this.radius);
+        this.overlayCanvasContext.translate(this.radius*0.99, this.radius);
         //this.radius = this.radius * 0.90
 
         this.rawData = []
