@@ -14,8 +14,9 @@ body {
 }
 
 .TopSection div {
-  background-color: #2E3C67;
+  background-color: #2F3C67;
   padding: 12px;
+  border-radius: 50%;
 }
 
 .viewport {
