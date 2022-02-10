@@ -65,6 +65,8 @@ export default class Rocket {
         this.obj.rotation.z = -angles.yaw;
         this.ang = angles.ang;
 
+        this.overlayCanvas.width = this.canvas.width;
+        this.overlayCanvas.height = this.canvas.height;
         drawOverlay(this.overlayCanvasContext, this.canvas, this.radius)
 
         this.overlayCanvasContext.rotate(this.ang);
