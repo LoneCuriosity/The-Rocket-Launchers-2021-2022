@@ -2,26 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mission Control</title>
   </head>
   <body>
     <div class="TopSection">
-      <div class="viewport">
-        <canvas id="RocketSim"></canvas>
-        <canvas id="Overlay"></canvas>
+
+      <div class="Dials">
+        <div class="Dial">
+          <p>Pitch</p>
+          <div class="Viewport">
+            <canvas id="RocketSim"></canvas>
+            <canvas id="Overlay"></canvas>
+          </div>
+        </div>
+  
+        <div class="Dial">
+          <p>Yaw</p>
+          <div class="Viewport">
+            <canvas id="RocketSim1"></canvas>
+            <canvas id="Overlay1"></canvas>
+          </div>
+        </div>
+  
+        <div class="Dial">
+          <p>Roll</p>
+          <div class="Viewport">
+            <canvas id="RocketSim2"></canvas>
+            <canvas id="Overlay2"></canvas>
+          </div>
+        </div>
       </div>
-      <div class="viewport">
-        <canvas id="RocketSim1"></canvas>
-        <canvas id="Overlay1"></canvas>
-      </div>
-      <div class="viewport">
-        <canvas id="RocketSim2"></canvas>
-        <canvas id="Overlay2"></canvas>
-      </div>
+
     </div>
+
+    <div class="BottomSection">
+      Test
+    </div>
+
     <button id="link">Link</button>
+
     <script type="module" src="./main.js"></script>
   </body>
 </html>

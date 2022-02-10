@@ -11,7 +11,7 @@ export default class Rocket {
     async InitViewport() {
       this.scene = new THREE.Scene();
 
-      this.camera = new THREE.PerspectiveCamera(75, (window.innerWidth / 4) / (window.innerHeight / 2), 0.1, 1000 );
+      this.camera = new THREE.PerspectiveCamera(75, (window.innerWidth / 6) / (window.innerHeight / 3), 0.1, 1000 );
   
       this.renderer = new THREE.WebGL1Renderer({
           canvas: this.canvas,
@@ -19,11 +19,15 @@ export default class Rocket {
       });
   
       this.renderer.setPixelRatio( window.devicePixelRatio );
-      this.renderer.setSize( window.innerWidth / 4, window.innerHeight / 2 );
+      this.renderer.setSize( window.innerWidth / 6, window.innerHeight / 3 );
   
       this.camera.position.setZ(30);
-  
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
+
+      let texture = new THREE.TextureLoader().load( './FibraDiCarbonio.jpg' );
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set( 24, 24 )
+      const material = new THREE.MeshBasicMaterial( { map: texture } );
   
       const objLoader = new OBJLoader()
       this.obj = await objLoader.loadAsync('./model/rocket.obj')
@@ -47,7 +51,7 @@ export default class Rocket {
         this.overlayCanvasContext = this.overlayCanvas.getContext("2d");
 
         this.radius = this.overlayCanvas.height / 2;
-        this.overlayCanvasContext.translate(this.radius*0.97, this.radius);
+        this.overlayCanvasContext.translate(this.radius, this.radius);
 
         this.ang = 0;
 

@@ -1,0 +1,56 @@
+body {
+	background-color: #070916;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	margin: 0;
+}
+
+.TopSection {
+	height: 50vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.Dials {
+	display: flex;
+	flex-direction: row;
+	background-color: lime;
+}
+
+.BottomSection {
+	height: 50vh;
+	display: flex;
+	flex-direction: row;
+}
+
+.Viewport {
+	position: relative;
+	background-image: linear-gradient(#07253D, #070916);
+	border: 2px solid grey;
+	border-radius: 50%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	canvas {
+		&:last-child {
+			position: absolute;
+		}
+	}
+}
+.Dial {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	p {
+		margin: 0 0 5px 0;
+		font-family: 'Cascadia Code SemiBold';
+		color: white;
+		font-size: 1.5rem;
+	}
+}

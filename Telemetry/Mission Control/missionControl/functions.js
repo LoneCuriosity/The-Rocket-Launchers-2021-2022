@@ -3,8 +3,8 @@ function drawOverlay(ctx, canvas, radius) {
     ctx.clearRect(-canvas.width, -canvas.height, canvas.width*2, canvas.height*2);
     var ang;
     var num;
-    ctx.fillStyle = 'red';
-    ctx.font = radius*0.1 + "px arial";
+    ctx.fillStyle = 'white';
+    ctx.font = radius*0.09 + "px arial";
     ctx.textBaseline="end";
     ctx.textAlign="center";
     
@@ -12,7 +12,7 @@ function drawOverlay(ctx, canvas, radius) {
       ang = num * Math.PI / 10;
       ctx.rotate(ang);
       ctx.translate(0, -radius*0.85);
-      ctx.fillRect(0, 0, 3, 15)
+      ctx.fillRect(0, 0, 2, 15)
       ctx.translate(0, radius*0.85);
       ctx.rotate(-ang);
     }
