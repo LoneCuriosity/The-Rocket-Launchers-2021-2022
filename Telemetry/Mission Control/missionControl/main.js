@@ -49,7 +49,7 @@ async function animationLoop(){
 
     if(data.length > 0){
         RocketOne.rotate = {pitch: (Math.PI/180 * 90), roll: data[0], yaw: 0, ang: data[0]}
-        RocketTwo.rotate = {pitch: (Math.PI/180 * 90), roll: -data[1], yaw: 0, ang: -data[1]}
+        RocketTwo.rotate = {pitch: 0, roll: 0, yaw: -data[1], ang: -data[1]}
         RocketThree.rotate = {pitch: (Math.PI/180 * 90), roll: data[2], yaw: 0, ang: data[2]}
     }
 }

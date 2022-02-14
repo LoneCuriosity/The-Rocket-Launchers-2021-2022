@@ -20,9 +20,9 @@ function drawOverlay(ctx, canvas, radius) {
     for(num = 1; num < 21; num++){
       ang = num * Math.PI / 10;
       ctx.rotate(ang);
-      ctx.translate(0, -radius*0.88);
+      ctx.translate(0, -radius*0.9);
       ctx.fillText((num*18).toString(), 0, 0);
-      ctx.translate(0, radius*0.88);
+      ctx.translate(0, radius*0.9);
       ctx.rotate(-ang);
     }
   }

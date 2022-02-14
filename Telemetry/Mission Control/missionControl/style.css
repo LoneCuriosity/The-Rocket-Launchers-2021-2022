@@ -1,37 +1,47 @@
 body {
-  background-color: #070916;
-  width: 100%;
-  height: 100%;
+  background-color: #DDE1E7;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   margin: 0;
+  box-sizing: border-box;
+}
+body button {
+  position: absolute;
 }
 
 .TopSection {
-  height: 50vh;
+  height: calc((100vh - 50px) / 2);
   display: flex;
   flex-direction: row;
-  align-items: center;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .Dials {
   display: flex;
   flex-direction: row;
-  background-color: lime;
+  gap: 10px;
+  border: 1px solid rgsba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  align-items: center;
 }
 
 .BottomSection {
-  height: 50vh;
+  height: calc((100vh - 50px) / 2);
   display: flex;
   flex-direction: row;
 }
 
 .Viewport {
   position: relative;
-  background-image: linear-gradient(#07253D, #070916);
-  border: 2px solid grey;
+  background-image: #dde1e7;
   border-radius: 50%;
+  margin: 0 10px 10px 10px;
+  border: 1px solid white;
+  box-shadow: -12px -12px 12px #FFFFFF, 12px 12px 12px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -46,10 +56,66 @@ body {
   align-items: center;
 }
 .Dial p {
-  margin: 0 0 5px 0;
-  font-family: "Cascadia Code SemiBold";
-  color: white;
-  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0 0 10px 0;
+}
+
+.TimeLineSection {
+  margin: 20px 0 10px 0;
+  height: 20px;
+}
+.TimeLineSection .TimeLine {
+  width: 90%;
+  height: 20px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #DDE1E7;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  box-shadow: -4px -4px 4px #FFFFFF, 4px 4px 4px rgba(0, 0, 0, 0.12);
+  border-radius: 25px;
+}
+.TimeLineSection .TimeLine div:nth-child(2) {
+  margin-left: 25%;
+}
+.TimeLineSection .TimeLine div:nth-child(3) {
+  margin-left: 15%;
+}
+.TimeLineSection .TimeLine div:nth-child(4) {
+  margin-left: 20%;
+}
+.TimeLineSection .TimeLine div:nth-child(5) {
+  margin-left: calc(40% - 100px);
+}
+.TimeLineSection .TimeLine div:nth-child(5) p {
+  left: -550%;
+}
+.TimeLineSection .TimeLine .event {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #DDE1E7;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.TimeLineSection .TimeLine .event p {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  text-transform: uppercase;
+  width: 255px;
+  position: absolute;
+  top: calc(-200% - 5px);
 }
 
 /*# sourceMappingURL=style.css.map */

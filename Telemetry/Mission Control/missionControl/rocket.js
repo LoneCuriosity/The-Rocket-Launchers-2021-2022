@@ -11,7 +11,7 @@ export default class Rocket {
     async InitViewport() {
       this.scene = new THREE.Scene();
 
-      this.camera = new THREE.PerspectiveCamera(75, (window.innerWidth / 6) / (window.innerHeight / 3), 0.1, 1000 );
+      this.camera = new THREE.PerspectiveCamera(75, (this.overlayCanvas.width) / (this.overlayCanvas.height), 0.1, 1000 );
   
       this.renderer = new THREE.WebGL1Renderer({
           canvas: this.canvas,
@@ -19,7 +19,7 @@ export default class Rocket {
       });
   
       this.renderer.setPixelRatio( window.devicePixelRatio );
-      this.renderer.setSize( window.innerWidth / 6, window.innerHeight / 3 );
+      this.renderer.setSize( this.overlayCanvas.width, this.overlayCanvas.height );
   
       this.camera.position.setZ(30);
 
@@ -46,12 +46,16 @@ export default class Rocket {
     }
 
     async InitOverlay() {
-        this.overlayCanvas.width = this.canvas.width;
-        this.overlayCanvas.height = this.canvas.height;
+        //this.overlayCanvas.width = parseFloat(this.canvas.style.width.slice(0,-2));
+        //this.overlayCanvas.height = parseFloat(this.canvas.style.height.slice(0,-2));
+
+        //this.overlayCanvas.width = this.overlayCanvas.width
+        //this.overlayCanvas.height = this.overlayCanvas.height
+
         this.overlayCanvasContext = this.overlayCanvas.getContext("2d");
 
-        this.radius = this.overlayCanvas.height / 2;
-        this.overlayCanvasContext.translate(this.radius, this.radius);
+        this.radius = this.overlayCanvas.width / 2;
+        this.overlayCanvasContext.translate(this.overlayCanvas.width / 2, this.overlayCanvas.height / 2);
 
         this.ang = 0;
 
@@ -65,13 +69,11 @@ export default class Rocket {
         this.obj.rotation.z = -angles.yaw;
         this.ang = angles.ang;
 
-        this.overlayCanvas.width = this.canvas.width;
-        this.overlayCanvas.height = this.canvas.height;
-        drawOverlay(this.overlayCanvasContext, this.canvas, this.radius)
+        drawOverlay(this.overlayCanvasContext, this.overlayCanvas, this.radius)
 
         this.overlayCanvasContext.rotate(this.ang);
         this.overlayCanvasContext.translate(0, -this.radius*0.85);
-        this.overlayCanvasContext.fillRect(0, 0, 3, 15)
+        this.overlayCanvasContext.fillRect(0, 0, 2, 15)
         this.overlayCanvasContext.translate(0, this.radius*0.85);
         this.overlayCanvasContext.rotate(-this.ang);
 
