@@ -2,6 +2,7 @@ import './style.css'
 import Rocket from './rocket.js'
 
 let port, reader, data = []
+let InitCharFound = false, TempString = ""
 
 var RocketOne = new Rocket(document.getElementById('RocketSim'),document.getElementById('Overlay'));
 RocketOne.InitViewport()
@@ -29,21 +30,20 @@ async function animationLoop(){
     if(port && reader){
       const { value, done } = await reader.read();
   
-      let InitCharFound = false, TempString = ""
-  
       value.split("").forEach(char => {
         if(InitCharFound){
-          if(char == "@"){
-            data = TempString.split(":").map(val => (val * (Math.PI/180)) )
+          if(char == "+"){
+            data = TempString.split(",")[2].split(":").map(val => (val * (Math.PI/180)))
             InitCharFound = false
             TempString = ""
           } else {
             TempString += char
           }
         }
-  
-        if(char == "#")
+        
+        if(char == "+"){
           InitCharFound = true
+        }
       });
     }
 
