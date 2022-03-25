@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import drawOverlay from './functions';
+import { drawOverlay } from './functions';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 
 export default class Rocket {
@@ -9,6 +9,9 @@ export default class Rocket {
     }
 
     async InitViewport() {
+      this.overlayCanvas.width = this.overlayCanvas.parentNode.clientHeight
+      this.overlayCanvas.height = this.overlayCanvas.parentNode.clientHeight
+
       this.scene = new THREE.Scene();
 
       this.camera = new THREE.PerspectiveCamera(75, (this.overlayCanvas.width) / (this.overlayCanvas.height), 0.1, 1000 );
@@ -46,12 +49,6 @@ export default class Rocket {
     }
 
     async InitOverlay() {
-        //this.overlayCanvas.width = parseFloat(this.canvas.style.width.slice(0,-2));
-        //this.overlayCanvas.height = parseFloat(this.canvas.style.height.slice(0,-2));
-
-        //this.overlayCanvas.width = this.overlayCanvas.width
-        //this.overlayCanvas.height = this.overlayCanvas.height
-
         this.overlayCanvasContext = this.overlayCanvas.getContext("2d");
 
         this.radius = this.overlayCanvas.width / 2;

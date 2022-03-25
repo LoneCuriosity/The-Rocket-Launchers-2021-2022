@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	background-color: #DDE1E7;
 	width: 100vw;
@@ -14,33 +18,41 @@ body {
 }
 
 .TopSection {
-	height: calc((100vh - 50px) / 2);
+	height: calc((90vh - 50px) / 2);
 	display: flex;
 	flex-direction: row;
 	box-sizing: border-box;
-	padding: 20px;
+	padding: 5px;
 }
 
 .Dials {
 	display: flex;
 	flex-direction: row;
-	gap: 10px;
+	gap: 25px;
 	border: 1px solid rgba(0, 0, 0, 0.25);
 	border-radius: 25px;
 	align-items: center;
+	height: 100%;
 }
 
 .BottomSection {
-	height: calc((100vh - 50px) / 2);
+	height: calc((110vh - 50px) / 2);
+	padding: 5px;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-evenly;
+	
+	div {
+		width: 100%;
+	}
 }
 
 .Viewport {
 	position: relative;
 	background-image: #dde1e7;
 	border-radius: 50%;
-	margin: 0 10px 10px 10px;
+
+	height: 100%;
 
 	border: 1px solid white;
 
@@ -61,6 +73,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	height: 100%;
 
 	p {
 		font-family: 'Roboto', sans-serif;
@@ -107,7 +121,7 @@ body {
 		}
 
 		div:nth-child(5) {
-			margin-left: calc(40% - 100px);
+			margin-left: calc(40% - 95px);
 
 			p {
 				left: -550%;
@@ -115,8 +129,8 @@ body {
 		}
 
 		.event {
-			width: 18px;
-			height: 18px;
+			width: 19px;
+			height: 19px;
 			border-radius: 50%;
 
 			background: #DDE1E7;
