@@ -2,55 +2,53 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Mission Control - 0.0.1</title>
+    <title>Hello World!</title>
     <link rel="stylesheet" href="./style.css" />
-    <link rel="icon" href="logo.jpeg">
-    <link rel="stylesheet" type="text/css" href="css/flightindicators.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/jquery.flightindicators.js"></script>
-    <script src="../node_modules/chart.js/dist/chart.js"></script>
-    <script src="../node_modules/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-    <script defer type="module" src="render.js"></script>
+    <script defer src="gauge.min.js"></script>
+    <script defer src="render.js"></script>
   </head>
-  <body class="bg-stone-800 p-2 flex flex-row h-screen">
-    
-    <div class="flex flex-col gap-1 h-full">
+  <body class="bg-neutral-900">
 
-      <div class="bg-stone-600 rounded-lg flex-1">
-        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-          <h6 class="text-white">Acceleration</h6>
-        </div>
-        <div class="h-[90%]">
-          <canvas id="AccelerationChart"></canvas>
+    <div class="flex flex-col h-screen p-2 gap-2">
+
+      <div class="flex flex-col rounded-lg shadow-md bg-neutral-800 text-slate-200">
+        <h1 class="font-Quantico text-center text-lg">Information</h1>
+        <hr class="mx-2">
+        <div class="p-2">
+          <ul class="flex flex-row text-base font-Quantico place-content-evenly">
+            <li>Temperature: 89&#8457;</li>
+            <li>Velocity: 79ft/s</li>
+            <li>Acceleration: 4ft/s<sup>2<sup></li>
+            <li>Altitude: 5540ft</li>
+            <li>Pressure: 10000psi</li>
+            <li>Humidity: 80%</li>
+          </ul>
         </div>
       </div>
 
-      <div class="bg-stone-600 rounded-lg">
-        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-          <h6 class="text-white">Instrument Panel</h6>
+      <!--
+      <div class="flex flex-row gap-2">
+        <div class="rounded-lg shadow-md bg-neutral-800">
+          <canvas id="gauge-test" class="h-9/10 md:aspect-square"></canvas>
+          <h2 class="font-Quantico text-center">Pitch: 180&deg;</h2>
         </div>
-        <div>
-          <span id="attitude"></span>
-          <span id="altimeter"></span>
-          <span id="heading"></span>
+        <div class="rounded-lg shadow-md bg-neutral-800">
+          <canvas id="gauge-test1" class="h-9/10 md:aspect-square"></canvas>
+          <h2 class="font-Quantico text-center">Yaw: 180&deg;</h2>
         </div>
-      </div>
-    
-
-      <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
-        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-          <h6 class="text-white">System</h6>
-        </div>
-        <div class="p-2 h-full">
-          <div class="border-2 border-stone-700 h-full overflow-y-scroll">
-            <p class="pl-2 text-white">[4/1/22 2:36:22 PM] [INFO] System online...</p>
-          </div>
+        <div class="rounded-lg shadow-md bg-neutral-800">
+          <canvas id="gauge-test2" class="h-9/10 md:aspect-square"></canvas>
+          <h2 class="font-Quantico text-center">Roll: 180&deg;</h2>
         </div>
       </div>
-      
+      -->
+  
+      <div>
+        Testing
+      </div>
 
     </div>
- 
+
   </body>
 </html>
