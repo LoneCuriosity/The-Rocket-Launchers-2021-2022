@@ -9,5 +9,5 @@ module.exports = {
   },
   plugins: [
     require('./node_modules/tailwind-percentage-heights-plugin')(),
-  ],
+  ]
 }
