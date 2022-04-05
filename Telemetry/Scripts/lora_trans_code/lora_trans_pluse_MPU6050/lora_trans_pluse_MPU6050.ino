@@ -38,7 +38,6 @@ void loop() {
   if(millis() > lastTransmission + interval){;
     String DataChunk = String(pitch) + ":" + String(roll) + ":" + String(yaw);
     Serial.print("AT+SEND=0," + String(DataChunk.length()) + "," + DataChunk + "\r\n");
-    //Serial.println(DataChunk);
   
     lastTransmission = millis();
   }

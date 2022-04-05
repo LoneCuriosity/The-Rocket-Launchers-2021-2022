@@ -15,7 +15,7 @@
           <p>Pitch</p>
           <div class="Viewport">
             <canvas id="RocketSim"></canvas>
-            <canvas id="Overlay" width="260px" height="260px"></canvas>
+            <canvas id="Overlay"></canvas>
           </div>
         </div>
   
@@ -23,7 +23,7 @@
           <p>Roll</p>
           <div class="Viewport">
             <canvas id="RocketSim1"></canvas>
-            <canvas id="Overlay1" width="260px" height="260px"></canvas>
+            <canvas id="Overlay1"></canvas>
           </div>
         </div>
   
@@ -31,7 +31,7 @@
           <p>Yaw</p>
           <div class="Viewport">
             <canvas id="RocketSim2"></canvas>
-            <canvas id="Overlay2" width="260px" height="260px"></canvas>
+            <canvas id="Overlay2"></canvas>
           </div>
         </div>
       </fieldset>
@@ -39,7 +39,15 @@
     </div>
 
     <div class="BottomSection">
-      Test
+      <div class="AccelerationChartDiv" style="position: relative;">
+        <canvas id="AccelerationChart"></canvas>
+      </div>
+      <div class="AltitudeChartDiv" style="position: relative;">
+        <canvas id="AltitudeChart"></canvas>
+      </div>
+      <div class="PressureChartDiv" style="position: relative;">
+        <canvas id="PressureChart"></canvas>
+      </div>
     </div>
 
     <dia class="TimeLineSection">

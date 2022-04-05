@@ -1,5 +1,8 @@
 import './style.css'
 import Rocket from './rocket.js'
+import Chart from 'chart.js/auto';
+import { CustomOptions } from './functions';
+import 'chartjs-adapter-date-fns';
 
 let port, reader, data = []
 let InitCharFound = false, TempString = ""
@@ -55,3 +58,61 @@ async function animationLoop(){
 }
 
 animationLoop()
+
+let XAccelerationData = [{x: new Date(), y: 20}], AltitudeData = [], PressureData = []
+let title = "Acceleration vs Time"
+
+let AccChart = new Chart(document.getElementById("AccelerationChart"), {
+  type: 'line',
+  data: {
+    datasets: [{
+      data: XAccelerationData,
+      tension: 0.3
+    }]
+  },
+  options: CustomOptions("Acceleration vs Time","Acceleration")
+});
+
+let AltChart = new Chart(document.getElementById("AltitudeChart"), {
+  type: 'line',
+  data: {
+    datasets: [{
+      data: AltitudeData,
+      tension: 0.3
+    }]
+  },
+  options: CustomOptions("Altitude vs Time","Altitude")
+});
+
+let PresChart = new Chart(document.getElementById("PressureChart"), {
+  type: 'line',
+  data: {
+    datasets: [{
+      data: PressureData,
+      tension: 0.3
+    }]
+  },
+  options: CustomOptions("Pressure vs Time","Pressure")
+});
+
+document.getElementsByClassName('Viewport')[0].style.width = document.getElementsByClassName('Viewport')[0].clientHeight + "px"
+document.getElementsByClassName('Viewport')[1].style.width = document.getElementsByClassName('Viewport')[0].clientHeight + "px"
+document.getElementsByClassName('Viewport')[2].style.width = document.getElementsByClassName('Viewport')[0].clientHeight + "px"
+
+window.addEventListener("resize", () => {
+  var diff = 74 - (document.getElementsByClassName('Dials')[0].clientHeight - document.getElementsByClassName('Viewport')[0].clientHeight)
+  document.getElementsByClassName('Viewport')[0].style.width = (document.getElementsByClassName('Viewport')[0].clientHeight - diff) + "px"
+  document.getElementsByClassName('Viewport')[0].style.height = (document.getElementsByClassName('Viewport')[0].clientHeight - diff) + "px"
+  RocketOne.InitViewport()
+  RocketOne.InitOverlay()
+
+  document.getElementsByClassName('Viewport')[1].style.width = (document.getElementsByClassName('Viewport')[1].clientHeight - diff) + "px"
+  document.getElementsByClassName('Viewport')[1].style.height = (document.getElementsByClassName('Viewport')[1].clientHeight - diff) + "px"
+  RocketTwo.InitViewport()
+  RocketTwo.InitOverlay()
+
+  document.getElementsByClassName('Viewport')[2].style.width = (document.getElementsByClassName('Viewport')[2].clientHeight - diff) + "px"
+  document.getElementsByClassName('Viewport')[2].style.height = (document.getElementsByClassName('Viewport')[2].clientHeight - diff) + "px"
+  RocketThree.InitViewport()
+  RocketThree.InitOverlay()
+})
