@@ -3,19 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <title>Mission Control - 0.0.1</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="icon" href="logo.jpeg">
-    <link rel="stylesheet" type="text/css" href="css/flightindicators.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/jquery.flightindicators.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/flightindicators.css"/>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery.flightindicators.js"></script>
     <script src="../node_modules/chart.js/dist/chart.js"></script>
     <script src="../node_modules/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-    <script defer type="module" src="render.js"></script>
+    <script src="./js/leaflet.js"></script>
+    <link rel="stylesheet" href="./css/leaflet.css" />
+
+    <script src="./js/jquery-ui.min.js"></script>
+    <script src="./js/knockout-2.2.1.js"></script>
+    <script src="./js/sevenSeg.js"></script>
+
+    <script defer type="module" src="./js/render.js"></script>
   </head>
-  <body class="bg-stone-800 p-2 flex flex-row h-screen">
+  <body class="bg-stone-800 p-2 flex flex-row h-screen justify-between gap-1">
     
-    <div class="flex flex-col gap-1 h-full">
+    <div class="flex flex-col gap-1 h-full flex-1">
 
       <div class="bg-stone-600 rounded-lg flex-1">
         <div class="bg-stone-700 pl-2.5 rounded-t-lg">
@@ -51,6 +58,53 @@
       
 
     </div>
- 
+
+    <div class="flex flex-col gap-1 h-full flex-1">
+
+      <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+          <h6 class="text-white">Map</h6>
+        </div>
+        <div class="p-2 h-full">
+          <div id="map" class="w-full h-full"></div>
+        </div>
+      </div>
+
+      <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+          <h6 class="text-white">Sensor and GPS Data Reading</h6>
+        </div>
+        <div class="p-2 h-full">
+          <div class="border-2 border-stone-700 h-full overflow-y-scroll">
+            <p class="pl-2 text-white">Packet Received - [4/1/22 2:36:22 PM]</p>
+            <div class="flex flex-row">
+              <ul>
+                <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
+                <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
+                <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
+              </ul>
+              <ul>
+                <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
+                <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
+                <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="flex-1">
+      <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+        <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+          <h6 class="text-white">Mission Clock</h6>
+        </div>
+        <div class="p-2 h-full">
+          <div id="SevenSegDisplay"></div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>

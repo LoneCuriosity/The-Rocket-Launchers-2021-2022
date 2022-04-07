@@ -17,7 +17,9 @@ const createWindow = () => {
     icon: __dirname + '/logo.jpeg',
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    transparent: false, 
+    frame: true
   });
 
   // and load the index.html of the app.
