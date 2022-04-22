@@ -170,7 +170,3 @@ $(window).resize(async function(){
     $('#viewport').height($('#viewport').width());
     await ViewportDraw()
 });
-
-setInterval(() => {
-    rotate(90,90,10);
-},1000)

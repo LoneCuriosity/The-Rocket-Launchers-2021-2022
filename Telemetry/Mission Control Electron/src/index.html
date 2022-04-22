@@ -20,122 +20,137 @@
     
     <script defer type="module" src="./js/render.js"></script>
   </head>
-  <body class="bg-stone-800 p-2 flex flex-col h-screen">
-    
-    <div class="flex flex-row justify-between gap-1 h-full">
-      <div class="flex flex-col gap-1 h-full flex-1">
+  <body class="bg-stone-800 max-h-screen box-border">
 
-        <div class="bg-stone-600 rounded-lg flex-1">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Acceleration</h6>
-          </div>
-          <div class="h-[90%]">
-            <canvas id="AccelerationChart"></canvas>
-          </div>
-        </div>
-  
-        <div class="bg-stone-600 rounded-lg flex-1">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Velocity</h6>
-          </div>
-          <div class="h-[90%]">
-            <canvas id="VelocityChart"></canvas>
-          </div>
-        </div>
-  
-        <div class="bg-stone-600 rounded-lg">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Instrument Panel</h6>
-          </div>
-          <div class="flex flex-row justify-center">
-            <span id="attitude"></span>
-            <span id="altimeter"></span>
-            <span id="heading"></span>
-          </div>
-        </div>
-      
-  
-        <!--<div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">System</h6>
-          </div>
-          <div class="p-2 h-full">
-            <div class="border-2 border-stone-700 h-full overflow-y-scroll">
-              <p class="pl-2 text-white">[4/1/22 2:36:22 PM] [INFO] System online...</p>
+    <div class="flex flex-col gap-1 h-screen p-2">
+      <div class="flex flex-row justify-between gap-1 h-full">
+        <div class="flex flex-col gap-1 h-full flex-1">
+
+          <div class="bg-stone-600 rounded-lg flex-1">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h1 class="text-white">Acceleration</h1>
+            </div>
+            <div class="h-[90%]">
+              <canvas id="AccelerationChart"></canvas>
             </div>
           </div>
-        </div>-->
+    
+          <div class="bg-stone-600 rounded-lg flex-1">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Velocity</h6>
+            </div>
+            <div class="h-[90%]">
+              <canvas id="VelocityChart"></canvas>
+            </div>
+          </div>
+    
+          <div class="bg-stone-600 rounded-lg">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Instrument Panel</h6>
+            </div>
+            <div class="flex flex-row justify-center">
+              <span id="attitude"></span>
+              <span id="altimeter"></span>
+              <span id="heading"></span>
+            </div>
+          </div>
         
-  
-      </div>
-  
-      <div class="flex flex-col gap-1 h-full flex-1">
-  
-        <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Map</h6>
-          </div>
-          <div class="p-2 h-full">
-            <div id="map" class="w-full h-full"></div>
-          </div>
+    
+          <!--<div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">System</h6>
+            </div>
+            <div class="p-2 h-full">
+              <div class="border-2 border-stone-700 h-full overflow-y-scroll">
+                <p class="pl-2 text-white">[4/1/22 2:36:22 PM] [INFO] System online...</p>
+              </div>
+            </div>
+          </div>-->
+          
+    
         </div>
-  
-        <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Sensor and GPS Data Reading</h6>
+    
+        <div class="flex flex-col gap-1 h-full flex-1">
+    
+          <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Map</h6>
+            </div>
+            <div class="p-2 h-full">
+              <div id="map" class="w-full h-full"></div>
+            </div>
           </div>
-          <div class="p-2 h-full">
-            <div class="border-2 border-stone-700 h-full overflow-y-scroll">
-              <p class="pl-2 text-white">Packet Received - [4/1/22 2:36:22 PM]</p>
-              <div class="flex flex-row">
-                <ul>
-                  <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
-                  <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
-                  <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
-                </ul>
-                <ul>
-                  <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
-                  <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
-                  <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
-                </ul>
+    
+          <div class="bg-stone-600 rounded-lg flex-1 flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Sensor and GPS Data Reading</h6>
+            </div>
+            <div class="p-2 h-full">
+              <div class="border-2 border-stone-700 h-full overflow-y-scroll">
+                <p class="pl-2 text-white">Packet Received - [4/1/22 2:36:22 PM]</p>
+                <div class="flex flex-row">
+                  <ul>
+                    <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
+                    <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
+                    <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
+                  </ul>
+                  <ul>
+                    <li><p class="pl-2 text-white">- Latitude: -7.08991</p></li>
+                    <li><p class="pl-2 text-white">- Longitude: 1.08991</p></li>
+                    <li><p class="pl-2 text-white">- Altitude: 30ft</p></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
+
+          <div class="bg-stone-600 rounded-lg flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Controls</h6>
+            </div>
+            <div class="p-2 h-full flex flex-row justify-evenly flex-wrap">
+              <button class="bg-red-600 text-white p-2 rounded-md">Launch</button>
+              <button class="bg-red-600 text-white p-2 rounded-md">Remote Restart</button>
+              <button class="bg-red-600 text-white p-2 rounded-md">Remote Shutdown</button>
+              <button class="bg-orange-600 text-white p-2 rounded-md">Flush File</button>
+              <button class="bg-orange-600 text-white p-2 rounded-md">Reset Clock</button>
+              <button class="bg-blue-600 text-white p-2 rounded-md">Replay From File</button>
+            </div>
+          </div>
+    
         </div>
-  
-      </div>
-      
-      <div class="flex flex-col gap-1 h-full flex-1">
-  
-        <div class="bg-stone-600 rounded-lg flex flex-col">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">ViewPort</h6>
+        
+        <div class="flex flex-col gap-1 h-full flex-1">
+          
+          <div class="bg-stone-600 rounded-lg flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">Mission Clock</h6>
+            </div>
+            <div class="p-2 h-full">
+              <div id="SevenSegDisplay"></div>
+            </div>
           </div>
-          <div id="viewport-container" class="p-2 h-full">
-            <canvas id="viewport"></canvas>
+
+          <div class="bg-stone-600 rounded-lg flex flex-col">
+            <div class="bg-stone-700 pl-2.5 rounded-t-lg">
+              <h6 class="text-white">ViewPort</h6>
+            </div>
+            <div id="viewport-container" class="p-2 h-full">
+              <canvas id="viewport"></canvas>
+            </div>
           </div>
         </div>
-  
-        <div class="bg-stone-600 rounded-lg flex flex-col">
-          <div class="bg-stone-700 pl-2.5 rounded-t-lg">
-            <h6 class="text-white">Mission Clock</h6>
-          </div>
-          <div class="p-2 h-full">
-            <div id="SevenSegDisplay"></div>
-          </div>
-        </div>
-  
       </div>
     </div>
     
-    <div class="w-full pt-5">
+    <!-- <div class="w-full pt-5">
       <div class="rounded-full bg-stone-600 h-[20px]">
         <div class="w-[20px] h-[20px] rounded-full absolute bg-stone-700"><p class="text-white absolute -top-6">Launch</p></div>
         <div class="w-[20px] h-[20px] rounded-full absolute left-[25%] bg-stone-700"><p class="text-white absolute -top-6">Apogee</p></div>
         <div class="w-[20px] h-[20px] rounded-full absolute left-[55%] bg-stone-700"><p class="text-white absolute -top-6">Parachute</p></div>
         <div class="w-[20px] h-[20px] rounded-full absolute right-2 bg-stone-700"><p class="text-white absolute -top-6 right-0">End</p></div>
       </div>
-    </div>
+    </div> -->
 
   </body>
 </html>
