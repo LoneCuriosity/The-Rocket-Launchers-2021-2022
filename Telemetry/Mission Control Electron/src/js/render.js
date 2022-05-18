@@ -1,7 +1,158 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.123.0/build/three.module.js';
 import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.123.0/examples/jsm/loaders/OBJLoader.js';
 
-function customOptions(title, yAxis){
+var packet, Packets = [], SecPackets = [], InitCharFound = false, TempString, XAccelerationData = [], YAccelerationData = [], ZAccelerationData = [], ZVelocityData = [], PreviousZVelocity = 0;
+
+const AccelerationChart = new Chart(document.getElementById("AccelerationChart"), {
+    type: 'line',
+    data: {
+        datasets: [
+            {
+                data: XAccelerationData,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.3
+            },
+            {
+                data: YAccelerationData,
+                borderColor: 'rgb(100,20,255)',
+                tension: 0.3
+            },
+            {
+                data: ZAccelerationData,
+                borderColor: 'rgb(100,120,255)',
+                tension: 0.3
+            }
+        ]
+    },
+    options: customOptions("Acceleration vs Time","Acceleration",-10)
+});
+
+let VelocityChart = new Chart(document.getElementById("VelocityChart"), {
+    type: 'line',
+    data: {
+        datasets: [
+            {
+                data: ZVelocityData,
+                borderColor: 'rgb(100,120,255)',
+                tension: 0.3
+            }
+        ]
+    },
+    options: customOptions("Velocity vs Time","Velocity",0)
+});
+
+document.getElementById("link").addEventListener('click', async function() {
+    navigator.serial.requestPort({ filters: [{ usbVendorId: 4292, usbProductId: 60000 }]}).then(async (port) => {
+        await port.open({ baudRate: 115200 })
+
+        const writer = port.writable.getWriter();
+        const encoder = new TextEncoder()
+        await writer.write(encoder.encode("AT+PARAMETER=10,7,1,7\r\n"));
+        writer.close();
+        writer.releaseLock();
+
+        let textDecoder = new TextDecoderStream();
+        port.readable.pipeTo(textDecoder.writable);
+        const reader = textDecoder.readable.getReader();
+
+        while(port.readable){
+            try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+
+                    value.split("").forEach(char => {
+                        if(InitCharFound){
+                            if(char == "+"){
+                                packet = TempString.split(",")
+                                InitCharFound = false
+                                TempString = ""
+                            } else {
+                                TempString += char
+                            }
+                        }
+                        
+                        if(char == "+"){
+                            InitCharFound = true
+                        }
+                    });
+                    
+                    const packetTemplate = ({Date, Lat, Lon, Alt, Speed, Sats, }) => `
+                            <p class="pl-2 text-white">Packet Received - [${Date}]</p>
+                            <div class="flex flex-row">
+                                <ul>
+                                    <li><p class="pl-2 text-white">- Latitude: ${Lat}</p></li>
+                                    <li><p class="pl-2 text-white">- Longitude: ${Lon}</p></li>
+                                    <li><p class="pl-2 text-white">- Altitude: ${Alt}ft</p></li>
+                                </ul>
+                                <ul>
+                                    <li><p class="pl-2 text-white">- Speed: ${Speed}Kn</p></li>
+                                    <li><p class="pl-2 text-white">- Satellites: ${Sats}</p></li>
+                                </ul>
+                            </div>`;
+
+                        const packetToObject = (packet) => {
+                            return { Date: `${packet[3]}/${packet[4]}/${packet[2]} - ${packet[5]}:${packet[6]}:${packet[7]}`, Lat: packet[15], Lon: packet[16], Alt: packet[18], Speed: packet[17], Sats: packet[19]}
+                        }
+                    
+                    if(packet[0] == "RCV=1" && packet.length == 22){
+                        if(Packets.length < 5){
+                            Packets.push(packet)
+                        } else {
+                            Packets.shift(packet)
+                            Packets.push(packet)
+                        }
+
+                        if((SecPackets.length < 20) && (SecPackets[SecPackets.length-1] == undefined || (SecPackets[SecPackets.length-1][7] != packet[7]))){
+                            SecPackets.push(packet)
+                        } else if(SecPackets[SecPackets.length-1][7] != packet[7]){
+                            SecPackets.shift(packet)
+                            SecPackets.push(packet)
+                        }
+                          
+                        XAccelerationData = SecPackets.map((packet) => {
+                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[8].trim()}
+                        })
+
+                        YAccelerationData = SecPackets.map((packet) => {
+                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[9].trim()}
+                        })
+
+                        ZAccelerationData = SecPackets.map((packet) => {
+                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[10].trim()}
+                        })
+
+                        parseFloat((packet[10].trim()) > 30 || parseFloat(packet[10].trim()) < -30) && console.log(packet)
+                        
+                        AccelerationChart["config"]["data"]["datasets"][0]["data"] = XAccelerationData
+                        AccelerationChart["config"]["data"]["datasets"][1]["data"] = YAccelerationData
+                        AccelerationChart["config"]["data"]["datasets"][2]["data"] = ZAccelerationData
+                        AccelerationChart.update()
+
+                        ZVelocityData = SecPackets.map((packet) => {
+                            let p = {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: PreviousZVelocity}
+                            PreviousZVelocity = (PreviousZVelocity + (parseFloat(packet[10].trim())*1))
+                            return p
+                        })
+
+                        VelocityChart["config"]["data"]["datasets"][0]["data"] = ZVelocityData
+                        VelocityChart.update()
+
+                        //$('#Console').html(Packets.map(packetToObject).map(packetTemplate).join(''));
+                    }
+                }
+            } catch (error) {
+              console.log(error)
+            }          
+        }
+    }).catch((e) => {
+        console.log(e)
+    });
+})
+
+function customOptions(title, yAxis, min){
     return {
         maintainAspectRatio: false,
         responsive: true,
@@ -10,6 +161,9 @@ function customOptions(title, yAxis){
                 title: {
                     display: true,
                     text: yAxis
+                },
+                ticks: {
+                    min: min
                 }
             },
             x: {
@@ -35,59 +189,21 @@ function customOptions(title, yAxis){
     }
 }
 
-let XAccelerationData = [
+/*let XAccelerationData = [
     {x: new Date(), y: 20},
     {x: new Date().setMinutes(new Date().getMinutes()+5), y: 30},
     {x: new Date().setMinutes(new Date().getMinutes()+10), y: 10},
     {x: new Date().setMinutes(new Date().getMinutes()+20), y: -205},
     {x: new Date().setMinutes(new Date().getMinutes()+30), y: 25}
-]
+]*/
 
-let YAccelerationData = [
+/*let YAccelerationData = [
     {x: new Date(), y: 20},
     {x: new Date().setMinutes(new Date().getMinutes()+5), y: 10},
     {x: new Date().setMinutes(new Date().getMinutes()+10), y: 20},
     {x: new Date().setMinutes(new Date().getMinutes()+20), y: -15},
     {x: new Date().setMinutes(new Date().getMinutes()+30), y: 5}
-]
-
-new Chart(document.getElementById("AccelerationChart"), {
-    type: 'line',
-    data: {
-        datasets: [
-            {
-                data: XAccelerationData,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.3
-            },
-            {
-                data: YAccelerationData,
-                borderColor: 'rgb(100,20,255)',
-                tension: 0.3
-            }
-        ]
-    },
-    options: customOptions("Acceleration vs Time","Acceleration")
-});
-
-new Chart(document.getElementById("VelocityChart"), {
-    type: 'line',
-    data: {
-        datasets: [
-            {
-                data: XAccelerationData,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.3
-            },
-            {
-                data: YAccelerationData,
-                borderColor: 'rgb(100,20,255)',
-                tension: 0.3
-            }
-        ]
-    },
-    options: customOptions("Velocity vs Time","Velocity")
-});
+]*/
 
 var AttitudeIndicator = $.flightIndicator('#attitude', 'attitude',{size: 163});
 var AltimeterIndicator = $.flightIndicator('#altimeter', 'altimeter',{size: 163});

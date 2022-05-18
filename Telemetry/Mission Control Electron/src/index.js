@@ -22,11 +22,40 @@ const createWindow = () => {
     frame: true
   });
 
+  mainWindow.webContents.session.on('select-serial-port', (event, portList, webContents, callback) => {
+    event.preventDefault()
+    if (portList && portList.length > 0) {
+      callback(portList[0].portId)
+    } else {
+      callback('') //Could not find any matching devices
+    }
+  })
+
+  mainWindow.webContents.session.on('serial-port-added', (event, port) => {
+    console.log('serial-port-added FIRED WITH', port)
+  })
+
+  mainWindow.webContents.session.on('serial-port-removed', (event, port) => {
+    console.log('serial-port-removed FIRED WITH', port)
+  })
+
+  mainWindow.webContents.session.setPermissionCheckHandler((webContents, permission, requestingOrigin, details) => {
+    if (permission === 'serial' && details.securityOrigin === 'file:///') {
+      return true
+    }
+  })
+
+  mainWindow.webContents.session.setDevicePermissionHandler((details) => {
+    if (details.deviceType === 'serial' && details.origin === 'file://') {
+      return true
+    }
+  })
+
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
