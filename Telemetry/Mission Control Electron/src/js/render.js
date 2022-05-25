@@ -93,11 +93,12 @@ document.getElementById("link").addEventListener('click', async function() {
                                 </ul>
                             </div>`;
 
-                        const packetToObject = (packet) => {
-                            return { Date: `${packet[3]}/${packet[4]}/${packet[2]} - ${packet[5]}:${packet[6]}:${packet[7]}`, Lat: packet[15], Lon: packet[16], Alt: packet[18], Speed: packet[17], Sats: packet[19]}
-                        }
-                    
-                    if(packet[0] == "RCV=1" && packet.length == 22){
+                    const packetToObject = (packet) => {
+                        return { Date: `${packet[3]}/${packet[4]}/${packet[2]} - ${packet[5]}:${packet[6]}:${packet[7]}`, Lat: packet[15], Lon: packet[16], Alt: packet[18], Speed: packet[17], Sats: packet[19]}
+                    }
+                
+                    if(packet[0] == "RCV=1"){
+                        packet = packet.filter(e => (e != "" && !isNaN(e)) );
                         if(Packets.length < 5){
                             Packets.push(packet)
                         } else {
@@ -105,23 +106,23 @@ document.getElementById("link").addEventListener('click', async function() {
                             Packets.push(packet)
                         }
 
-                        if((SecPackets.length < 20) && (SecPackets[SecPackets.length-1] == undefined || (SecPackets[SecPackets.length-1][7] != packet[7]))){
+                        if((SecPackets.length < 20) && (SecPackets[SecPackets.length-1] == undefined || (SecPackets[SecPackets.length-1][6] != packet[6]))){
                             SecPackets.push(packet)
-                        } else if(SecPackets[SecPackets.length-1][7] != packet[7]){
+                        } else if(SecPackets[SecPackets.length-1][6] != packet[6]){
                             SecPackets.shift(packet)
                             SecPackets.push(packet)
                         }
                           
                         XAccelerationData = SecPackets.map((packet) => {
-                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[8].trim()}
+                            return {x: `${packet[1]}-${packet[2].padStart(2, '0')}-${packet[3].padStart(2, '0')} ${packet[4].padStart(2, '0')}:${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}`, y: packet[7].trim()}
                         })
 
                         YAccelerationData = SecPackets.map((packet) => {
-                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[9].trim()}
+                            return {x: `${packet[1]}-${packet[2].padStart(2, '0')}-${packet[3].padStart(2, '0')} ${packet[4].padStart(2, '0')}:${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}`, y: packet[8].trim()}
                         })
 
                         ZAccelerationData = SecPackets.map((packet) => {
-                            return {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: packet[10].trim()}
+                            return {x: `${packet[1]}-${packet[2].padStart(2, '0')}-${packet[3].padStart(2, '0')} ${packet[4].padStart(2, '0')}:${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}`, y: packet[9].trim()}
                         })
 
                         parseFloat((packet[10].trim()) > 30 || parseFloat(packet[10].trim()) < -30) && console.log(packet)
@@ -132,8 +133,8 @@ document.getElementById("link").addEventListener('click', async function() {
                         AccelerationChart.update()
 
                         ZVelocityData = SecPackets.map((packet) => {
-                            let p = {x: `${packet[2]}-${packet[3].padStart(2, '0')}-${packet[4].padStart(2, '0')} ${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}:${packet[7].padStart(2, '0')}`, y: PreviousZVelocity}
-                            PreviousZVelocity = (PreviousZVelocity + (parseFloat(packet[10].trim())*1))
+                            let p = {x: `${packet[1]}-${packet[2].padStart(2, '0')}-${packet[3].padStart(2, '0')} ${packet[4].padStart(2, '0')}:${packet[5].padStart(2, '0')}:${packet[6].padStart(2, '0')}`, y: PreviousZVelocity}
+                            PreviousZVelocity = (PreviousZVelocity + (parseFloat(packet[9].trim())*1))
                             return p
                         })
 
