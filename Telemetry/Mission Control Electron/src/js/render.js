@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.123.0/build/three.module.js';
 import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.123.0/examples/jsm/loaders/OBJLoader.js';
 
-var packet, Packets = [], SecPackets = [], InitCharFound = false, TempString, XAccelerationData = [], YAccelerationData = [], ZAccelerationData = [], ZVelocityData = [], PreviousZVelocity = 0;
+var packet, Packets = [], SecPackets = [], InitCharFound = false, TempString = "", XAccelerationData = [], YAccelerationData = [], ZAccelerationData = [], ZVelocityData = [], PreviousZVelocity = 0;
 
 const AccelerationChart = new Chart(document.getElementById("AccelerationChart"), {
     type: 'line',
@@ -42,14 +42,17 @@ let VelocityChart = new Chart(document.getElementById("VelocityChart"), {
 });
 
 document.getElementById("link").addEventListener('click', async function() {
-    navigator.serial.requestPort({ filters: [{ usbVendorId: 4292, usbProductId: 60000 }]}).then(async (port) => {
-        await port.open({ baudRate: 115200 })
+    //navigator.serial.getPorts().then((ports) => {
+    //    console.log(ports[0].getInfo())
+    //});
+    navigator.serial.requestPort({ filters: [{ usbVendorId: 9025, usbProductId: 67 }]}).then(async (port) => {
+        await port.open({ baudRate: 9600 })
 
-        const writer = port.writable.getWriter();
-        const encoder = new TextEncoder()
-        await writer.write(encoder.encode("AT+PARAMETER=10,7,1,7\r\n"));
-        writer.close();
-        writer.releaseLock();
+        //const writer = port.writable.getWriter();
+        //const encoder = new TextEncoder()
+        //await writer.write(encoder.encode("AT+PARAMETER=10,7,1,7\r\n"));
+        //writer.close();
+        //writer.releaseLock();
 
         let textDecoder = new TextDecoderStream();
         port.readable.pipeTo(textDecoder.writable);
@@ -67,6 +70,7 @@ document.getElementById("link").addEventListener('click', async function() {
                         if(InitCharFound){
                             if(char == "+"){
                                 packet = TempString.split(",")
+                                console.log(packet)
                                 InitCharFound = false
                                 TempString = ""
                             } else {
@@ -74,7 +78,7 @@ document.getElementById("link").addEventListener('click', async function() {
                             }
                         }
                         
-                        if(char == "+"){
+                        if(char == ":"){
                             InitCharFound = true
                         }
                     });
