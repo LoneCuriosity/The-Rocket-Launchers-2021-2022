@@ -15,6 +15,7 @@
 #define MIC_PIN 9
 #define RESET_PIN A3
 #define SWITCH_PIN 2
+#define LED 4
 
 #define GPSSerial Serial1
 
@@ -32,6 +33,7 @@ AFSK afsk;
 SoftwareI2C softwarei2c;
 
 String Packet = "";
+bool LED_ON = false;
 
 String DDMMToDD(String DDMM, int DecPl){
       String adsub = DDMM.substring(0,2);
@@ -53,8 +55,12 @@ void setup() {
   
   pinMode(RESET_PIN, OUTPUT);
   digitalWrite(RESET_PIN, HIGH);
+
+  pinMode(LED, OUTPUT);
   
   Serial.begin(115200);
+  
+  Serial3.begin(115200);
 
   radio.initialize();
   radio.frequency(144390);
@@ -73,14 +79,19 @@ void setup() {
 
   while (!SD.begin(53)) {
     Serial.println("{ERROR: SD Card}");
-    delay(500);
+    digitalWrite(LED, HIGH);
+    delay(1000);
+    digitalWrite(LED, LOW);
+    delay(1000);
   }
    
   bme.setI2CAddress(0x77);
 
   while(!rtc.begin()){
     Serial.println("{ERROR: RTC}");
-    delay(500);
+    delay(1000);
+    digitalWrite(LED, LOW);
+    delay(1000);
   }
 
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
@@ -95,21 +106,35 @@ void setup() {
 
   while(bme.beginI2C() == false){
     Serial.println("{ERROR: BME280}");
-    delay(500);
+    delay(1000);
+    digitalWrite(LED, LOW);
+    delay(1000);
   }
   
   byte status = mpu.begin();
   while(status!=0){
     Serial.println("{ERROR: MPU6050}");
-    delay(500);
+    delay(1000);
+    digitalWrite(LED, LOW);
+    delay(1000);
   }
 
   mpu.calcOffsets(true,true);
 
+  Serial3.print("AT+PARAMETER=10,7,1,7\r\n");
+
   csv = SD.open("test_1", FILE_WRITE);
+
+  
 }
 
 void loop() {
+  
+  if(LED_ON == false){
+    digitalWrite(LED, HIGH);
+    LED_ON = true;
+  }
+  
   mpu.update();
     
   char c = GPS.read();
@@ -146,8 +171,9 @@ void loop() {
     }
 
     Packet = Date + "," + Rotation + "," + Accel + "," + BME + "," + GPSCords;
-    //Serial.println(Packet);
-    //transmit(GPS.lastNMEA());
+    //Serial.println("AT+SEND=0," + String(Packet.length()) + "," + Packet + "\r\n");
+    Serial3.print("AT+SEND=0," + String(Packet.length()) + "," + Packet + "\r\n");
+    transmit(GPS.lastNMEA());
   }
 
   if (millis() - fileTimer > 100) {
